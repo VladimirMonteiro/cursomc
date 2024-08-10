@@ -27,6 +27,8 @@ public class Client implements Serializable {
     @CollectionTable(name = "phone")
     private Set<String> phones = new HashSet<>();
 
+    private List<Order> orders = new ArrayList<>();
+
 
     public Client() {
     }
@@ -94,6 +96,14 @@ public class Client implements Serializable {
 
     public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override
