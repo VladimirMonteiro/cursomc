@@ -2,6 +2,7 @@ package com.outercode.cursomc.services;
 
 
 import com.outercode.cursomc.domain.Category;
+import com.outercode.cursomc.exceptions.ObjectNotFoundException;
 import com.outercode.cursomc.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class CategoryService {
 
     public Category search(Integer id){
         Optional<Category> category = repository.findById(id);
-        return category.orElse(null);
+        return category.orElseThrow(()-> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + " Tipo: " + Category.class.getName()));
 
     }
 
