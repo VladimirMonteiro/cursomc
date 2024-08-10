@@ -1,5 +1,6 @@
 package com.outercode.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -14,10 +15,11 @@ public class Address implements Serializable {
     private Integer id;
     private String logradouro;
     private String number;
-    private String comlement;
+    private String complement;
     private String bairro;
     private String cep;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
@@ -29,11 +31,11 @@ public class Address implements Serializable {
     public Address() {
     }
 
-    public Address(Integer id, String logradouro, String number, String comlement, String bairro, String cep, Client client, City city) {
+    public Address(Integer id, String logradouro, String number, String complement, String bairro, String cep, Client client, City city) {
         this.id = id;
         this.logradouro = logradouro;
         this.number = number;
-        this.comlement = comlement;
+        this.complement = complement;
         this.bairro = bairro;
         this.cep = cep;
         this.client = client;
@@ -64,14 +66,6 @@ public class Address implements Serializable {
         this.number = number;
     }
 
-    public String getComlement() {
-        return comlement;
-    }
-
-    public void setComlement(String comlement) {
-        this.comlement = comlement;
-    }
-
     public String getBairro() {
         return bairro;
     }
@@ -86,6 +80,30 @@ public class Address implements Serializable {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public String getComplement() {
+        return complement;
+    }
+
+    public void setComplement(String complement) {
+        this.complement = complement;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 
     @Override

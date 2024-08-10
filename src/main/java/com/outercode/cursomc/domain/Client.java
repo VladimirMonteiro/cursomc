@@ -1,5 +1,6 @@
 package com.outercode.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.outercode.cursomc.enums.TypeClient;
 import jakarta.persistence.*;
 
@@ -18,6 +19,7 @@ public class Client implements Serializable {
     private String cpfOrCnpj;
     private Integer typeClient;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "client")
     private List<Address> addresses = new ArrayList<>();
 
