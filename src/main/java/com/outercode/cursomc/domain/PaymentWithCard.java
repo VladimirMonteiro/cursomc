@@ -1,9 +1,10 @@
 package com.outercode.cursomc.domain;
 
 import com.outercode.cursomc.enums.StatePayment;
+import jakarta.persistence.Entity;
 
 
-
+@Entity
 public class PaymentWithCard extends Payment{
     private static final long serialVersionUID = 1L;
 

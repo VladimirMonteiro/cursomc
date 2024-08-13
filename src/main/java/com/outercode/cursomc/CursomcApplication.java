@@ -1,6 +1,7 @@
 package com.outercode.cursomc;
 
 import com.outercode.cursomc.domain.*;
+import com.outercode.cursomc.enums.StatePayment;
 import com.outercode.cursomc.enums.TypeClient;
 import com.outercode.cursomc.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -30,6 +32,12 @@ public class CursomcApplication implements CommandLineRunner {
 
 	@Autowired
 	private AddressRepository addressRepository;
+
+	@Autowired
+	private OrderRepository orderRepository;
+
+	@Autowired
+	private PaymentRepository paymentRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -78,7 +86,28 @@ public class CursomcApplication implements CommandLineRunner {
 
 		cli1.getAddresses().addAll(Arrays.asList(e1, e2));
 
+
 		clientRepository.saveAll(Arrays.asList(cli1));
 		addressRepository.saveAll(Arrays.asList(e1, e2));
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+
+
+		Order ped1 = new Order(null, sdf.parse("30/09/2017 10:32"), cli1, e1 );
+		Order ped2 = new Order(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
+
+		Payment pagto1 = new PaymentWithCard(null, StatePayment.PAID, ped1, 6);
+		ped1.setPayment(pagto1);
+
+		Payment pagto2 = new PaymentWithTicket(null, StatePayment.PENDING, ped2, sdf.parse("20/10/2017 00:00"), null);
+		ped2.setPayment(pagto2);
+
+		cli1.getOrders().addAll(Arrays.asList(ped1, ped2));
+
+		orderRepository.saveAll(Arrays.asList(ped1, ped2));
+		paymentRepository.saveAll(Arrays.asList(pagto1, pagto2));
+
+
+
 	}
 }

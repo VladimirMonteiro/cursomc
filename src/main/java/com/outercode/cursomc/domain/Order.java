@@ -8,8 +8,11 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity
+@Table(name = "orders")
 public class Order implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -17,16 +20,23 @@ public class Order implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
     private Payment payment;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client client;
+
+    @ManyToOne
+    @JoinColumn(name = "delivery_address_id")
+    private Address deliveryAddress;
 
     public Order() {
     }
 
-    public Order(Integer id, Date instant, Payment payment, Client client) {
+    public Order(Integer id, Date instant, Client client, Address deliveryAddress) {
         this.id = id;
         this.instant = instant;
-        this.payment = payment;
         this.client = client;
+        this.deliveryAddress = deliveryAddress;
     }
 
     public Integer getId() {
