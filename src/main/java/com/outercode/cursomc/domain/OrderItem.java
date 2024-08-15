@@ -1,10 +1,7 @@
 package com.outercode.cursomc.domain;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 
@@ -12,13 +9,15 @@ import java.io.Serializable;
 public class OrderItem implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EmbeddedId
     private OrderItemPK id = new OrderItemPK();
 
     private double discount;
     private Integer quantity;
     private double price;
+
+    public OrderItem(){
+    }
 
     public OrderItem(Order order, Product product, double discount, Integer quantity, double price) {
         id.setOrder(order);

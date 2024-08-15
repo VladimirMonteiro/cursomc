@@ -31,6 +31,7 @@ public class Order implements Serializable {
     @JoinColumn(name = "delivery_address_id")
     private Address deliveryAddress;
 
+    @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> itens = new HashSet<>();
 
     public Order() {
